@@ -93,7 +93,7 @@ export class State extends Schema {
 
 export class StateHandlerRoom extends Room<State> {
     maxClients = 4;
-    startAppleCount = 100;
+    startAppleCount = 200;
 
     onCreate(options) {
         console.log("StateHandlerRoom created!", options);
