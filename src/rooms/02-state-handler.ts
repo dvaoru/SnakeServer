@@ -10,6 +10,7 @@ export class Vector2float extends Schema {
 }
 
 export class Player extends Schema {
+    @type("string") login = ""
     @type("number") x = Math.floor(Math.random() * 256) - 128;
     @type("number") z = Math.floor(Math.random() * 256) - 128;
     @type("uint8") d = 0;
@@ -42,9 +43,10 @@ export class State extends Schema {
         player.d = player.score; //Math.round(player.score / 3);
     }
 
-    createPlayer(sessionId: string, snakeType: number) {
+    createPlayer(sessionId: string, snakeType: number, login: string) {
         const player = new Player();
         player.type = snakeType;
+        player.login = login;
         this.players.set(sessionId, player);
     }
 
@@ -130,7 +132,7 @@ export class StateHandlerRoom extends Room<State> {
 
     onJoin(client: Client, data) {
         console.log("Информация при подключении " + data);
-        this.state.createPlayer(client.sessionId, data.t);
+        this.state.createPlayer(client.sessionId, data.t, data.login);
     }
 
     onLeave(client) {
